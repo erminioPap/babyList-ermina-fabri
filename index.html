@@ -4,184 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ermina & Fabri Baby List</title>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #9DC183; /* Sage green background */
-            color: white; /* Font color */
-        }
-        h1 {
-            font-size: 24px; /* Title font size */
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 16px; /* Text font size */
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: white; /* Header background color */
-            color: #738561; /* Header font color */
-            font-weight: bold; /* Header font bold */
-        }
-	th:nth-child(1), td:nth-child(1) {
-            width: 35%;
-        }
-        th:nth-child(2), td:nth-child(2) {
-            width: 45%;
-        }
-        th:nth-child(3), td:nth-child(3) {
-            width: 20%;
-        }
-        button {
-            background-color: white; /* Button background color */
-            color: black; /* Button text color */
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #ddd;
-        }
-	img {
-            max-width: 100%; /* Ensure image is responsive */
-            height: auto; /* Maintain aspect ratio */
-            display: block;
-            margin: 0 auto;
-        }
-	@media (max-width: 768px) {
-            table, th, td {
-                width: 100%;
-                display: block;
-            }
-            th, td {
-                text-align: right;
-            }
-            td {
-                margin-bottom: 10px;
-            }
-            button {
-                width: 100%; /* Make button span full width */
-            }
+        body {font-family: Arial, sans-serif; margin: 20px; background-color: #9DC183; color: white;}
+        h1 {font-size: 24px; }
+        table { width: 100%; border-collapse: collapse; font-size: 16px; /* Text font size */}
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: white; /* Header */ color: #738561; font-weight: bold; }
+	th:nth-child(1), td:nth-child(1) { width: 35%; }
+        th:nth-child(2), td:nth-child(2) { width: 45%; }
+        th:nth-child(3), td:nth-child(3) { width: 20%; }
+        button { background-color: white; color: black; border: none; padding: 10px 20px; cursor: pointer; }
+        button:hover { background-color: #ddd; }
+	img { max-width: 100%; height: auto; /* Maintain aspect ratio */ display: block; margin: 0 auto; }
+	@media (max-width: 768px) { table, th, td { width: 100%; display: block; }
+            th, td { text-align: right; }
+            td { margin-bottom: 10px; }
+            button { width: 100%; /* Make button span full width */ }
         }
     </style>
 </head>
 <body>
     <h1>Ermina & Fabri Baby List</h1>
-    <table id="babyList">
+    <table id="babyListTable">
         <tr>
             <th>Picture</th>
             <th>Description & Link</th>
             <th>Action</th>
         </tr>
-        <tr>
-            <td><img src="https://walz-live.cdn.aboutyou.cloud/images/7fd86e706d815eace9e8f3487a783cbc.jpg" alt="strollerfootmuff" width="60%"></td>
-            <td><a href="https://www.baby-walz.ch/de/p/joolz-universal-fusssack-oliv-7924054/" style="color: white;">Link</a> - Stroller footmuff.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
-
-	<tr>
-            <td><img src="https://walz-live.cdn.aboutyou.cloud/images/18eb9d239c1dc0d936ae4805364d3443.jpg" alt="Stroller footmuff"   width="60%"></td>
-            <td><a href="https://www.baby-walz.ch/de/p/joolz-universal-ganzjahres-fusssack-fuer-day-day2-day3-day-geo-geo2-geo3-hub-hub-blau-7337280/" style="color: white;">Link</a> - Stroller footmuff.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
-
-	<tr>
-            <td><img src="https://walz-live.cdn.aboutyou.cloud/images/6c9b183024e29110f831fd9fd2ca4d50.jpg" alt="babyphone"   width="60%"></td>
-            <td><a href="https://www.baby-walz.ch/de/p/philips-avent-babyphone-mit-kamera-premium-scd892-26-grau-7878095/" style="color: white;">Link</a> - Babyphone.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
-
-	<tr>
-            <td><img src="https://walz-live.cdn.aboutyou.cloud/images/a13994280e4b4ba591e109db0c78fdaf.jpg?quality=75&width=1200&height=1200" alt="beistellbett"   width="60%" ></td>
-            <td><a href="https://www.baby-walz.ch/de/p/maxi-cosi-beistellbett-iora-air-grau-7521146/" style="color: white;">Link</a> - Side-baby-bed.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
-
-	<tr>
-            <td><img src="https://img.babymarkt.com/isa/163853/c1/1:1_1800w/-/A302454_001/A302454" alt="babyshell"  √   width="60%"></td>
-            <td><a href="https://www.babymarkt.com/ch/product/maxi-cosi-babyschale-pebble-360-essential-green-A302454/" style="color: white;">Link</a> - Baby shell for car.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
-
-	<tr>
-            <td><img src="https://img.babymarkt.com/isa/163853/c1/1:1_1800w/-/A474204_001/A474204" alt="carseatset"   width="60%" ></td>
-            <td><a href="https://www.babymarkt.com/ch/product/cybex-gold-kindersitz-set-reboarder-sirona-g-inklusive-babyschale-cloud-g-und-basisstation-base-g-plus-fog-grey-A474204/" style="color: white;">Link</a> - Car seat set.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
-
-	<tr>
-            <td><img src="https://img.babymarkt.com/isa/163853/c1/1:1_1800w/-/A466059_001/A466059" alt="carseatset2"   width="60%" ></td>
-            <td><a href="https://www.babymarkt.com/ch/product/maxi-cosi-babyschale-pebble-s-tonal-graphite-inkl-reboarder-pearl-s-tonal-graphite-und-basisstation-family-fix-s-black-A466059/" style="color: white;">Link</a> - Car seat set 2.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
-
-	<tr>
-            <td><img src="https://walz-live.cdn.aboutyou.cloud/images/47736153ed9d87d2d6df8fd555e97d4f.jpg?quality=75&width=1200&height=1200" alt="beistellbett"   width="60%" ></td>
-            <td><a href="https://www.baby-walz.ch/de/p/hauck-bundle-hochstuhl-alpha-inkl-alpha-bouncer-premium-natur-7983301/" style="color: white;">Link</a> - High chair set.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
-
-	<tr>
-            <td><img src="https://img.babymarkt.com/isa/163853/c1/1:1_1800w/-/A170148_001/A170148" alt="seat"   width="60%" ></td>
-            <td><a href="https://www.babymarkt.com/ch/product/treppy-hochstuhl-weiss-A170148/" style="color: white;">Link</a> - High chair seat.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
-
-	<tr>
-            <td><img src="https://img.babymarkt.com/isa/163853/c1/1:1_1800w/-/A303460_001/A303460" alt="seatnewborn"   width="60%" ></td>
-            <td><a href="https://www.babymarkt.com/ch/product/treppy-newborn-seaty-weiss-A303460/" style="color: white;">Link</a> - High chair newborn set.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
-
-	<tr>
-            <td><img src="https://img.babymarkt.com/isa/163853/c1/1:1_1800w/-/A301028_001/A301028" alt="steriliser"   width="60%" ></td>
-            <td><a href="https://www.babymarkt.com/ch/product/avent-philips-flaschensterilisator-trockner-scf-293-00-premium-A301028/" style="color: white;">Link</a> - Bottles steriliser.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
-
-	<tr>
-            <td><img src="https://img.babymarkt.com/isa/163853/c1/1:1_1800w/-/A452785_001/A452785" alt="diaperchange"   width="60%" ></td>
-            <td><a href="https://www.babymarkt.com/ch/product/julius-zoellner-2-keil-wickelmulde-wild-friends-allover-50-x-65-cm-A452785/" style="color: white;">Link</a> - Changing surface.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
-
-	<tr>
-            <td><img src="https://img.babymarkt.com/isa/163853/c1/1:1_1800w/-/A324834_001/A324834" alt="himmel"   width="60%" ></td>
-            <td><a href="https://www.babymarkt.com/ch/product/alvi-baldachin-nature-A324834/" style="color: white;">Link</a> - Bed baldachin.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
-
-	<tr>
-            <td><img src="https://img.babymarkt.com/isa/163853/c1/1:1_1800w/-/A015278_001/A015278" alt="stange"    width="60%"></td>
-            <td><a href="https://www.babymarkt.com/ch/product/alvi-himmelstange-extra-lang-A015278/" style="color: white;">Link</a> - Bed baldachin holder.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
-
-	<tr>
-            <td><img src="https://img.babymarkt.com/isa/163853/c1/1:1_1800w/-/A302013_001/A302013" alt="changesurface"   width="60%" ></td>
-            <td><a href="https://www.babymarkt.com/ch/product/julius-zoellner-wickelauflage-softy-otti-85-x-75-cm-A302013/" style="color: white;">Link</a> - Wide changing surface.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
-
-	<tr>
-            <td><img src="https://img.babymarkt.com/isa/163853/c1/1:1_1800w/-/A302487_001/A302487" alt="changesurfacecover"   width="60%" ></td>
-            <td><a href="https://www.babymarkt.com/ch/product/julius-zoellner-bezug-fuer-wickelauflagen-loop-jacob-little-otti-A302487/" style="color: white;">Link</a> - Cover for wide changing surface.</td>
-            <td><button onclick="removeItem(this)">I bought this</button></td>
-        </tr>
     </table>
 
     <script>
-        function removeItem(button) {
-            // Find the row containing the button and remove it
-            var row = button.parentNode.parentNode;
-            row.parentNode.removeChild(row);
+	const firebaseConfig = {
+  	    apiKey: "AIzaSyBWX8vPV34KkkHOZBTp280xgBpr7j7uOtA",
+            authDomain: "babylistef.firebaseapp.com",
+  	    databaseURL: "https://babylistef-default-rtdb.europe-west1.firebasedatabase.app",
+	    projectId: "babylistef",
+	    storageBucket: "babylistef.firebasestorage.app",
+	    messagingSenderId: "603347821148",
+	    appId: "1:603347821148:web:043ec755b52b2ca617fc99",
+	    measurementId: "G-L3FYK9K6EV"
+	};
+
+    	// Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Reference to the 'babyList' node in Firebase
+        const babyListRef = database.ref("babyList");
+
+	// Function to load baby list items dynamically
+        function loadBabyList() {
+            babyListRef.on("value", (snapshot) => {
+                const table = document.getElementById("babyListTable");
+                table.innerHTML = `
+                    <tr>
+                        <th>Picture</th>
+                        <th>Description & Link</th>
+                        <th>Action</th>
+                    </tr>
+                `; // Reset table header
+                
+                snapshot.forEach((childSnapshot) => {
+                    const key = childSnapshot.key;
+                    const data = childSnapshot.val();
+                    
+                    // Create table row
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td><img src="${data.image}" alt="Item Image" width="60%"></td>
+                        <td><a href="${data.link}" style="color: white;">Link</a> - ${data.description}</td>
+                        <td><button onclick="removeItem('${key}')">I bought this</button></td>
+                    `;
+                    table.appendChild(row);
+                });
+            });
         }
+	    
+        // Function to remove an item from Firebase
+        function removeItem(itemId) {
+            if (confirm("Are you sure you bought this item?")) {
+                database.ref("babyList/" + itemId).remove()
+                    .then(() => console.log("Item removed successfully"))
+                    .catch((error) => console.error("Error removing item: ", error));
+            }
+        }
+
+	// Load items on page load
+        loadBabyList();
     </script>
+
 </body>
 </html>
