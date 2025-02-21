@@ -52,7 +52,7 @@
         const database = firebase.database();
 
         // Reference to the 'babyList' node in Firebase
-        const babyListRef = database.ref("babyList");
+        const babyListRef = database.ref("babylist");
 
 	// Function to load baby list items dynamically
         function loadBabyList() {
@@ -85,7 +85,7 @@
         // Function to remove an item from Firebase
         function removeItem(itemId) {
             if (confirm("Are you sure you bought this item?")) {
-                database.ref("babyList/" + itemId).remove()
+                database.ref("babylist/" + itemId).remove()
                     .then(() => console.log("Item removed successfully"))
                     .catch((error) => console.error("Error removing item: ", error));
             }
